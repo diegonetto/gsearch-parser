@@ -5,17 +5,17 @@ require 'nokogiri'
 module GSearchParser
 
   def GSearchParser.webSearch(query)
-    GoogleSearch.new(query)
+    GoogleWebSearch.new(query)
   end
 
 end
 
 ###################################################
 #                                                 #
-#              GoogleSearch Class                 #
+#             GoogleWebSearch Class               #
 #                                                 #
 ###################################################
-class GoogleSearch
+class GoogleWebSearch
   attr_accessor :results
 
   # Class initializer
@@ -40,6 +40,11 @@ class GoogleSearch
 
       # Extract the URI
       uri = result.css('cite').first.inner_html
+
+      # Ignore YouTube videos for websearch
+      unless uri.index('www.youtube.com').nil? 
+        next
+      end
 
       # Create a new Result object and append to the array
       @results << Result.new(title, content, uri)
