@@ -3,9 +3,11 @@ require 'open-uri'
 require 'nokogiri'
 
 module GSearchParser
-  def webSearch(query)
+
+  def GSearchParser.webSearch(query)
     GoogleSearch.new(query)
   end
+
 end
 
 ###################################################
@@ -23,18 +25,17 @@ class GoogleSearch
 
     # TODO: Format query
 
-    # TODO: Fetch page
-    searchPage = Nokogiri::HTML(open("http://google.com/search?q=#{query}"))
+    # Fetch page
+    searchPage = Nokogiri::HTML(open("http://google.com/search?sourceid=chrome&q=#{query}", 
+      'User-Agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.152 Safari/535.19'))
 
-    @results << Result.new('title', 'content', "http://www.google.com")
-
-    # Iterate over all search result divs and parse content into Result objects,
-    # and finally store these in the results array
-    #searchPage.css('li.g > div.vsc').each do |result|
-     # title = result.css('h3.r > a.l').content
-      #content = result.css('div.s > span.st').content
-      #@results << Result.new('title', 'content', "http://www.google.com")
-    #end
+    # Iterate over each Google result list element and extract data
+    searchPage.css('li.g').each do |result|
+      title = result.css('h3').first.content
+      content = result.css('span.st').first.inner_html
+      uri = result.css('cite').inner_html
+      @results << Result.new(title, content, uri)
+    end
   end
 
   # Iterator over results
