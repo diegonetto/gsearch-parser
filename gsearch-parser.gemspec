@@ -31,6 +31,8 @@ Gem::Specification.new do |s|
   s.rubygems_version = "1.8.21"
   s.summary = "Google search result parser."
 
+  s.add_dependency 'nokogiri', '~> 1.5.2'
+
   if s.respond_to? :specification_version then
     s.specification_version = 3
 
