@@ -32,14 +32,11 @@ class GoogleSearch
     # Iterate over each Google result list element 
     searchPage.css('li.g').each do |result|
       # Extract the title
-      title = result.css('h3').first.inner_html
+      title = result.css('h3 > a').first.inner_html
 
       # Extract the content. There is the possibility for
       # the content to be nil, so check for this
-      content = result.css('span.st').first
-      if !content
-        content = ''
-      end
+      content = result.css('span.st').first.nil? ? '' : result.css('span.st').first.inner_html
 
       # Extract the URI
       uri = result.css('cite').first.inner_html
