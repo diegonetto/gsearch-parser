@@ -31,5 +31,16 @@ Gem::Specification.new do |s|
   s.rubygems_version = "1.8.21"
   s.summary = "Google search result parser."
 
+  if s.respond_to? :specification_version then
+    s.specification_version = 3
+
+    if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
+      s.add_runtime_dependency(%q<gsearch-parser>, [">= 0"])
+    else
+      s.add_dependency(%q<gsearch-parser>, [">= 0"])
+    end
+  else
+    s.add_dependency(%q<gsearch-parser>, [">= 0"])
+  end
 end
 
