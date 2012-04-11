@@ -29,11 +29,22 @@ class GoogleSearch
     searchPage = Nokogiri::HTML(open("http://google.com/search?sourceid=chrome&q=#{query}", 
       'User-Agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.152 Safari/535.19'))
 
-    # Iterate over each Google result list element and extract data
+    # Iterate over each Google result list element 
     searchPage.css('li.g').each do |result|
-      title = result.css('h3').first.content
+      # Extract the title
+      title = result.css('h3').first.inner_html
+
+      # Extract the content. There is the possibility for
+      # the content to be nil, so check for this
       content = result.css('span.st').first
-      uri = result.css('cite').first
+      if !content
+        content = ''
+      end
+
+      # Extract the URI
+      uri = result.css('cite').first.inner_html
+
+      # Create a new Result object and append to the array
       @results << Result.new(title, content, uri)
     end
   end
