@@ -23,8 +23,7 @@ Gem::Specification.new do |s|
     "Rakefile",
     "VERSION",
     "gsearch-parser.gemspec",
-    "lib/gsearch-parser.rb",
-    "lib/gsearch-parser/version.rb"
+    "lib/gsearch-parser.rb"
   ]
   s.homepage = "https://github.com/diegonetto/gsearch-parser"
   s.require_paths = ["lib"]
