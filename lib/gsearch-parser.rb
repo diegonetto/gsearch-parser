@@ -33,7 +33,7 @@ class GoogleSearch
     searchPage.css('li.g').each do |result|
       title = result.css('h3').first.content
       content = result.css('span.st').first
-      uri = result.css('cite')
+      uri = result.css('cite').first
       @results << Result.new(title, content, uri)
     end
   end
