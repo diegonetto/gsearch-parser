@@ -12,4 +12,3 @@ Jeweler::Tasks.new do |gem|
   gem.authors = ["Diego Netto"]
 end
 Jeweler::RubygemsDotOrgTasks.new
-gem.add_dependency 'nokogiri', '~> 1.5.2'
