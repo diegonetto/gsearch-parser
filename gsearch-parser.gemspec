@@ -4,8 +4,8 @@ require File.expand_path('../lib/gsearch-parser/version', __FILE__)
 Gem::Specification.new do |gem|
   gem.authors       = ["Diego Netto"]
   gem.email         = ["diegormnetto@gmail.com"]
-  gem.description   = %q{TODO: Write a gem description}
-  gem.summary       = %q{TODO: Write a gem summary}
+  gem.description   = %q{Parses Google search results.}
+  gem.summary       = %q{Provides an API for querying Google searches and parsing the results.}
   gem.homepage      = ""
 
   gem.files         = `git ls-files`.split($\)
