@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = "gsearch-parser"
-  s.version = "0.2.0"
+  s.version = "0.2.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Diego Netto"]
@@ -30,8 +30,6 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
   s.rubygems_version = "1.8.21"
   s.summary = "Google search result parser."
-
-  s.add_dependency 'nokogiri', '~> 1.5.2'
 
   if s.respond_to? :specification_version then
     s.specification_version = 3
