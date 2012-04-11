@@ -32,8 +32,8 @@ class GoogleSearch
     # Iterate over each Google result list element and extract data
     searchPage.css('li.g').each do |result|
       title = result.css('h3').first.content
-      content = result.css('span.st').first.inner_html
-      uri = result.css('cite').inner_html
+      content = result.css('span.st').first
+      uri = result.css('cite')
       @results << Result.new(title, content, uri)
     end
   end
