@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "gsearch-parser"
-  s.version = "0.2.4"
+  s.version = "0.3.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Diego Netto"]
-  s.date = "2012-04-11"
+  s.date = "2012-04-15"
   s.description = "Queries Google search and parses the resulting web page for content."
   s.email = "diegormnetto@gmail.com"
   s.extra_rdoc_files = [
