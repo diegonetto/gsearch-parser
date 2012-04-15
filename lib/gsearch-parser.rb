@@ -1,38 +1,61 @@
-require "gsearch-parser/version"
 require 'open-uri'
 require 'nokogiri'
 
+#
+# Module method definitions
+#
 module GSearchParser
 
+  # Entry method for performing a web search
   def GSearchParser.webSearch(query)
-    GoogleWebSearch.new(query)
+    webSearch = GoogleWebSearch.new(query)
   end
 
 end
 
-###################################################
-#                                                 #
-#             GoogleWebSearch Class               #
-#                                                 #
-###################################################
+#
+# Google Web Search class
+#
 class GoogleWebSearch
-  attr_accessor :results
-
+  attr_accessor :results, :currentPage
+  @index
+ 
   # Class initializer
   def initialize(query)
-    # Initialize array
+    # Initialize variables
     @results = Array.new
+    @index = 0
 
-    # TODO: Format query
+    # Update the results list: (Fetch, Store, and Parse)
+    updateResults("http://google.com/search?sourceid=chrome&q=#{query}")
+  end
 
-    # Fetch page
-    searchPage = Nokogiri::HTML(open("http://google.com/search?sourceid=chrome&q=#{query}", 
-      'User-Agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.152 Safari/535.19'))
+  # Update the WebSearch results array by performing a Fetch, Store, Parse routine
+  def updateResults(url)
+    # Fetch
+    searchPage = fetchPage(url)
+
+    # Store
+    @currentPage = searchPage
+
+    # Parse
+    parseCurrentPage
+  end
+
+  # Fetch the page from a URL
+  def fetchPage(url)
+    Nokogiri::HTML(open(url, 'User-Agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.152 Safari/535.19'))
+  end
+
+  # Parse the current page and populate results
+  def parseCurrentPage
+    # Initialize local variables
+    currentResults = Array.new
 
     # Iterate over each Google result list element 
-    searchPage.css('li.g').each do |result|
+    @currentPage.css('li.g').each do |result|
       # Extract the title
-      title = result.css('h3 > a').first.inner_html
+      title = result.css('h3.r a').first.inner_html
 
       # Extract the content. There is the possibility for
       # the content to be nil, so check for this
@@ -47,8 +70,22 @@ class GoogleWebSearch
       end
 
       # Create a new Result object and append to the array
-      @results << Result.new(title, content, uri)
+      currentResults << Result.new(title, content, uri)
     end
+    @results += currentResults
+    return currentResults
+  end
+
+  # Parse the results from the next page and append to results list
+  def nextResults
+    # Parse next result page link
+    nextPageUrl = @currentPage.css("table#nav tr td a")[@index]['href']
+
+    # Increment reference index
+    @index += 1
+
+    # Update results
+    updateResults("http://www.google.com" + nextPageUrl)
   end
 
   # Iterator over results
@@ -56,22 +93,20 @@ class GoogleWebSearch
     @results.each(&blk)
   end
 
-  ###################################################
-  #                                                 #
-  #                Result Class                     #
-  #                                                 #
-  ###################################################
-  class Result
-    attr_accessor :title, :content, :uri
+end # GoogleWebSearch
 
-    # Class initializer
-    def initialize(title, content, uri)
-      @title = title
-      @content = content
-      @uri = uri
-    end
+#
+# Result class
+#
+class Result
+  attr_accessor :title, :content, :uri
 
-  end # Result
+  # Class initializer
+  def initialize(title, content, uri)
+    @title = title
+    @content = content
+    @uri = uri
+  end
 
-end # GoogleSearch
+end # Result
 
