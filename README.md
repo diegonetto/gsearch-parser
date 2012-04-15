@@ -18,12 +18,14 @@ Or install it yourself as:
 
 ## Usage
 
-  require 'gsearch-parser'
-
 Create a new Google web search from a query string
+
+    require 'gsearch-parser'
+
     webSearch = GSearchParser.webSearch('what')
 
 Iterate over results
+
     webSearch.each do |result|
       puts "\t" + result.title
       puts "\t" + result.content
@@ -32,6 +34,7 @@ Iterate over results
     end
 
 Fetch the next set of results, and iterate over them
+
     webSearch.nextResults.each do |result|
       puts "\t" + result.title
       puts "\t" + result.content
@@ -40,6 +43,7 @@ Fetch the next set of results, and iterate over them
     end
 
 Iterate over all the results, including the ones from calls to .nextResults
+
     webSearch.each do |result|
       puts "\t" + result.title
       puts "\t" + result.content
