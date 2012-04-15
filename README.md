@@ -20,32 +20,32 @@ Or install it yourself as:
 
   require 'gsearch-parser'
 
-  # Create a new Google web search from a query string
-  webSearch = GSearchParser.webSearch('what')
+Create a new Google web search from a query string
+    webSearch = GSearchParser.webSearch('what')
 
-  # Iterate over results
-  webSearch.each do |result|
-    puts "\t" + result.title
-    puts "\t" + result.content
-    puts "\t" + result.uri
-    puts "\n"
-  end
+Iterate over results
+    webSearch.each do |result|
+      puts "\t" + result.title
+      puts "\t" + result.content
+      puts "\t" + result.uri
+      puts "\n"
+    end
 
-  # Fetch the next set of results, and iterate over them
-  webSearch.nextResults.each do |result|
-    puts "\t" + result.title
-    puts "\t" + result.content
-    puts "\t" + result.uri
-    puts "\n"
-  end
+Fetch the next set of results, and iterate over them
+    webSearch.nextResults.each do |result|
+      puts "\t" + result.title
+      puts "\t" + result.content
+      puts "\t" + result.uri
+      puts "\n"
+    end
 
-  # Iterate over all the results, including the ones from calls to .nextResults
-  webSearch.each do |result|
-    puts "\t" + result.title
-    puts "\t" + result.content
-    puts "\t" + result.uri
-    puts "\n"
-  end
+Iterate over all the results, including the ones from calls to .nextResults
+    webSearch.each do |result|
+      puts "\t" + result.title
+      puts "\t" + result.content
+      puts "\t" + result.uri
+      puts "\n"
+    end
 
 ## Contributing
 
