@@ -17,14 +17,13 @@ end
 # Google Web Search class
 #
 class GoogleWebSearch
-  attr_accessor :results, :currentPage
-  @index
- 
+  attr_accessor :results, :nextURI
+  @currentPage
+  
   # Class initializer
   def initialize(query)
     # Initialize variables
     @results = Array.new
-    @index = 0
 
     # Update the results list: (Fetch, Store, and Parse)
     updateResults("http://google.com/search?sourceid=chrome&q=#{query}")
@@ -78,14 +77,14 @@ class GoogleWebSearch
 
   # Parse the results from the next page and append to results list
   def nextResults
-    # Parse next result page link
-    nextPageUrl = @currentPage.css("table#nav tr td a")[@index]['href']
+    # Parse next result page link from the currently marked one
+    nextPagePath = @currentPage.at_css("table#nav tr td.cur").next_sibling().at_css("a")['href']
 
-    # Increment reference index
-    @index += 1
+    # Construct the URI
+    @nextURI = "http://www.google.com" + nextPagePath
 
     # Update results
-    updateResults("http://www.google.com" + nextPageUrl)
+    updateResults(@nextURI)
   end
 
   # Iterator over results
