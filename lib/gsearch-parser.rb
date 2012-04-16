@@ -32,7 +32,9 @@ class GoogleWebSearch
 
     case flag
     when 'QUERY'
-      updateResults("http://google.com/search?q=#{arg1}")
+      # Format query
+      query = arg1.gsub(/ /, '+')
+      updateResults("http://google.com/search?q=#{query}")
     when 'URI'
       updateResults(arg1)
     end
