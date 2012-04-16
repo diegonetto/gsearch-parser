@@ -29,6 +29,15 @@ class GoogleWebSearch
     updateResults("http://google.com/search?sourceid=chrome&q=#{query}")
   end
 
+  # Update the nextURI attribute
+  def updateNextURI
+    # Parse next result page link from the currently marked one
+    nextPagePath = @currentPage.at_css("table#nav tr td.cur").next_sibling().at_css("a")['href']
+
+    # Construct the URI
+    @nextURI = "http://www.google.com" + nextPagePath
+  end
+
   # Update the WebSearch results array by performing a Fetch, Store, Parse routine
   def updateResults(url)
     # Fetch
@@ -77,11 +86,8 @@ class GoogleWebSearch
 
   # Parse the results from the next page and append to results list
   def nextResults
-    # Parse next result page link from the currently marked one
-    nextPagePath = @currentPage.at_css("table#nav tr td.cur").next_sibling().at_css("a")['href']
-
-    # Construct the URI
-    @nextURI = "http://www.google.com" + nextPagePath
+    # Update nextURI
+    updateNextURI
 
     # Update results
     updateResults(@nextURI)
