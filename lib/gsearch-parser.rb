@@ -74,6 +74,7 @@ class GoogleWebSearch
 
     # Iterate over each Google result list element 
     @currentPage.css('li.g').each do |result|
+      begin
       # Extract the title
       title = result.css('h3 a').first.inner_html
 
@@ -91,6 +92,9 @@ class GoogleWebSearch
 
       # Create a new Result object and append to the array
       currentResults << Result.new(title, content, uri)
+      rescue NoMethodError
+        next
+      end
     end
     @results += currentResults
     return currentResults
