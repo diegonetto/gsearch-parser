@@ -8,7 +8,12 @@ module GSearchParser
 
   # Entry method for performing a web search
   def GSearchParser.webSearch(query)
-    webSearch = GoogleWebSearch.new(query)
+    webSearch = GoogleWebSearch.new(query, 'QUERY')
+  end
+
+  # Allows directly specifing the URI of the page to parse
+  def GSearchParser.parseSearchPage(uri)
+    webSearch = GoogleWebSearch.new(uri, 'URI')
   end
 
 end
@@ -21,12 +26,16 @@ class GoogleWebSearch
   @currentPage
   
   # Class initializer
-  def initialize(query)
+  def initialize(arg1, flag)
     # Initialize variables
     @results = Array.new
 
-    # Update the results list: (Fetch, Store, and Parse)
-    updateResults("http://google.com/search?sourceid=chrome&q=#{query}")
+    case flag
+    when 'QUERY'
+      updateResults("http://google.com/search?sourceid=chrome&q=#{arg1}")
+    when 'URI'
+      updateResults(arg1)
+    end
 
     # Update next URI
     updateNextURI   
@@ -45,7 +54,7 @@ class GoogleWebSearch
   def updateResults(url)
     # Fetch
     searchPage = fetchPage(url)
-
+puts url
     # Store
     @currentPage = searchPage
 
