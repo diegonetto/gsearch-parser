@@ -32,7 +32,7 @@ class GoogleWebSearch
 
     case flag
     when 'QUERY'
-      updateResults("http://google.com/search?sourceid=chrome&q=#{arg1}")
+      updateResults("http://google.com/search?q=#{arg1}")
     when 'URI'
       updateResults(arg1)
     end
@@ -54,7 +54,7 @@ class GoogleWebSearch
   def updateResults(url)
     # Fetch
     searchPage = fetchPage(url)
-puts url
+
     # Store
     @currentPage = searchPage
 
@@ -75,7 +75,7 @@ puts url
     # Iterate over each Google result list element 
     @currentPage.css('li.g').each do |result|
       # Extract the title
-      title = result.css('h3.r a').first.inner_html
+      title = result.css('h3 a').first.inner_html
 
       # Extract the content. There is the possibility for
       # the content to be nil, so check for this
