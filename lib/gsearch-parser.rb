@@ -27,6 +27,9 @@ class GoogleWebSearch
 
     # Update the results list: (Fetch, Store, and Parse)
     updateResults("http://google.com/search?sourceid=chrome&q=#{query}")
+
+    # Update next URI
+    updateNextURI   
   end
 
   # Update the nextURI attribute
@@ -86,11 +89,11 @@ class GoogleWebSearch
 
   # Parse the results from the next page and append to results list
   def nextResults
-    # Update nextURI
-    updateNextURI
-
     # Update results
     updateResults(@nextURI)
+
+    # Update nextURI
+    updateNextURI
   end
 
   # Iterator over results
