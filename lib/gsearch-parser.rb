@@ -49,7 +49,7 @@ class GoogleWebSearch
     nextPagePath = @currentPage.at_css("table#nav tr td.cur").next_sibling().at_css("a")['href']
 
     # Construct the URI
-    @nextURI = "http://www.google.com" + nextPagePath
+    @nextURI = "https://www.google.com" + nextPagePath
   end
 
   # Update the WebSearch results array by performing a Fetch, Store, Parse routine
